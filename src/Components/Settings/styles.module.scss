@@ -1,0 +1,171 @@
+.ToggleButton {
+  cursor: pointer;
+  color: #F1EFF5;
+  text-shadow: 0 0 7px #F1EFF5;
+  display: flex;
+  align-items: center;
+  font-family: 'Barlow', sans-serif;
+  font-size: 1em;
+  border: 0;
+  appearance: none;
+  background: none;
+
+  .Icon {
+    margin-right: .5rem;
+    font-size: 1.3em;
+  }
+}
+
+.Settings {
+  position: relative;
+  border-radius: 5px;
+  background-color: #201B2D;
+  padding: 1rem;
+  height: 18rem;
+  width: 15rem;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  box-shadow: 6px 6px 20px 1px #14111E;
+
+  h2 {
+    color: #F1EFF5;
+    text-shadow:
+      0 0 7px #F1EFF5;
+    font-family: 'Sacramento', cursive;
+    font-size: 2.75em;
+    margin: 0;
+  }
+
+  hr {
+    background-color: #907FAD;
+    border: 0;
+    height: .1rem;
+    width: 3rem;
+  }
+
+  .Container {
+    height: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: space-around;
+  }
+
+  .SettingWrapper {
+    span {
+      color: #dddce2;
+      font-family: 'Barlow', sans-serif;
+      font-size: 1.1em;
+      margin-right: .25rem;
+    }
+  }
+
+  .SquareShape {
+    position: relative;
+    appearance: none;
+
+    &::before {
+      cursor: pointer;
+      content: "";
+      display: block;
+      height: 1rem;
+      width: 1rem;
+      border-radius: .05rem;
+      background-color: #5A4B81;
+      position: relative;
+      top: .35rem;
+    }
+
+    &:hover::before {
+      background-color: #665494;
+    }
+  }
+
+  .DiamondShape {
+    position: relative;
+    appearance: none;
+
+    &::before {
+      cursor: pointer;
+      content: "";
+      display: block;
+      height: 1rem;
+      width: 1rem;
+      border-radius: .05rem;
+      background-color: #5A4B81;
+      position: relative;
+      top: .35rem;
+      transform: rotate(45deg);
+    }
+
+    &:hover::before {
+      background-color: #665494;
+    }
+  }
+
+  .CircleShape {
+    position: relative;
+    appearance: none;
+
+    &::before {
+      cursor: pointer;
+      content: "";
+      display: block;
+      height: 1rem;
+      width: 1rem;
+      border-radius: 100%;
+      background-color: #5A4B81;
+      position: relative;
+      top: .35rem;
+    }
+
+    &:hover::before {
+      background-color: #665494;
+    }
+  }
+
+  .HeartShape {
+    cursor: pointer;
+    position: relative;
+    top: .35rem;
+    height: 1rem;
+    width: .65rem;
+    background-color: #5A4B81;
+    border-radius: 50px 50px 0 0;
+    transform: rotate(315deg);
+    appearance: none;
+
+    &::before {
+      position: absolute;
+      height: .65rem;
+      width: 1rem;
+      left: 0;
+      bottom: 0;
+      content: "";
+      background-color: #5A4B81;
+      border-radius: 0 50px 50px 0;
+    }
+
+    &:hover,
+    &:hover::before {
+      background-color: #665494;
+    }
+  }
+
+  .Select {
+    color: #F1EFF5;
+    font-family: 'Barlow', sans-serif;
+    font-size: 1.1em;
+    text-shadow:
+      0 0 7px #F1EFF5,
+      0 0 42px #5271ff,
+      0 0 82px #5271ff;
+    background: #262034;
+    outline: none;
+    border: 1px solid #907FAD;
+    border-radius: .2rem;
+    text-align: center;
+    margin-left: .4rem;
+  }
+}
