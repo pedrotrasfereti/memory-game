@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export interface ShapesState {
+export interface IShapesState {
   value: string[];
 }
 
-const initialState: ShapesState = {
+const initialState: IShapesState = {
   value: ["Square"], // shapes array
 };
 

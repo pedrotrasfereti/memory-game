@@ -1,17 +1,22 @@
 import React, { useCallback, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { VscSettings as SettingsIcon } from "react-icons/vsc";
-import { useDispatch, useSelector } from "react-redux";
+
+import { setQuantity } from "../../app/features/quantitySlice";
 import { addShape, removeShape } from "../../app/features/shapesSlice";
+import { setDifficulty } from "../../app/features/difficultySlice";
 import { RootState } from "../../app/store";
 
 import styles from "./styles.module.scss";
 
 function Settings() {
+  const [dropdown, setDropdown] = useState(false);
+
   const dispatch = useDispatch();
   const shapes = useSelector((state: RootState) => state.shapes.value);
-
-  const [dropdown, setDropdown] = useState(false);
+  const quantity = useSelector((state: RootState) => state.quantity.value);
+  const difficulty = useSelector((state: RootState) => state.difficulty.value);
 
   const handleToggleDropdown = useCallback(() => {
     setDropdown((prevState) => !prevState);
@@ -21,9 +26,21 @@ function Settings() {
     if (shapes.includes(shapeName) && shapes.length >= 2) {
       // remove shape
       dispatch(removeShape(shapeName));
-    } else {
+    } else if (!shapes.includes(shapeName)) {
       // add shape
       dispatch(addShape(shapeName));
+    }
+  };
+
+  const handleSetQuantity = (newQty: number) => {
+    if (newQty !== quantity) {
+      dispatch(setQuantity(newQty));
+    }
+  };
+
+  const handleSetDifficulty = (newDifficulty: string) => {
+    if (newDifficulty !== difficulty) {
+      dispatch(setDifficulty(newDifficulty));
     }
   };
 
@@ -88,10 +105,10 @@ function Settings() {
             name="quantity"
             id="quantity"
             className={styles.Select}
-            defaultValue="4"
+            value={quantity.toString()}
+            onChange={(e) => handleSetQuantity(Number(e.target.value))}
           >
             <option value="4">4</option>
-            <option value="4">6</option>
             <option value="9">9</option>
           </select>
         </div>
@@ -102,7 +119,8 @@ function Settings() {
             name="quantity"
             id="quantity"
             className={styles.Select}
-            defaultValue="Easy"
+            value={difficulty}
+            onChange={(e) => handleSetDifficulty(e.target.value)}
           >
             <option value="Easy">Easy</option>
             <option value="Normal">Normal</option>
