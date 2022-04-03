@@ -11,14 +11,45 @@
 }
 
 .Game {
+  position: relative;
   background-color: #201B2D;
   display: grid;
   grid-gap: 1rem;
   padding: 1rem;
-  border-radius: 5px;
+  border-radius: .3rem;
   height: 15rem;
   width: 15rem;
   box-shadow: 6px 6px 20px 1px #14111E;
+
+  .StartScreen {
+    background-color: #28223c63;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: .3rem;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+
+    .StartButton {
+      cursor: pointer;
+      background: #d5d2da;
+      color: #14111E;
+      font-family: 'Barlow', sans-serif;
+      font-size: 1.25em;
+      appearance: none;
+      padding: .5rem 1.5rem;
+      border-radius: .3rem;
+      border: 0;
+      outline: 0;
+      transition: .3s;
+
+      &:hover {
+        filter: brightness(95%);
+      }
+    }
+  }
 
   .Button {
     cursor: pointer;

@@ -1,16 +1,18 @@
 import React from "react";
-
+import { useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
 
-import { useSelector } from "react-redux";
 import styles from "./styles.module.scss";
 
-import Shape from "./Shape";
 import { RootState } from "../../app/store";
+
+import Shape from "./Shape";
+import StartScreen from "./StartScreen";
 
 function Game() {
   const shapes = useSelector((state: RootState) => state.shapes.value);
   const quantity = useSelector((state: RootState) => state.quantity.value);
+  const game = useSelector((state: RootState) => state.game);
 
   const colors = ["red", "green", "yellow", "blue"];
   const elements: JSX.Element[] = [];
@@ -22,7 +24,7 @@ function Game() {
     const shapesSize = shapes.length;
 
     // look for a way to simplify this!!
-    // q: 'what' is the number im using to multiply shapes.length?
+    // q: what is the number im using to multiply shapes.length?
     if (shapesSize === 1) {
       const [firstElement] = shapes;
       shape = firstElement;
@@ -61,6 +63,7 @@ function Game() {
 
   return (
     <div className={`${styles.Game} ${gridTemplate}`}>
+      {game.inProgress || <StartScreen />}
       {elements.map((element) => element)}
     </div>
   );
