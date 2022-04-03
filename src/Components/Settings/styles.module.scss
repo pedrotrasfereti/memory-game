@@ -61,6 +61,15 @@
     }
   }
 
+  .ShapeChecked {
+    filter: brightness(133%);
+
+    &::before,
+    &::after {
+      filter: brightness(133%) !important;
+    }
+  }
+
   .SquareShape {
     position: relative;
     appearance: none;
