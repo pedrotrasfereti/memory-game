@@ -18,24 +18,33 @@ function Game() {
   for (let i = 0; i < quantity; i += 1) {
     /* define shape dynamically */
     let shape = shapes[i];
+
     const shapesSize = shapes.length;
 
+    // look for a way to simplify this!!
+    // q: 'what' is the number im using to multiply shapes.length?
     if (shapesSize === 1) {
       const [firstElement] = shapes;
       shape = firstElement;
+    } else if (i >= shapesSize * 4) {
+      shape = shapes[i - shapesSize * 4];
+    } else if (i >= shapesSize * 3) {
+      shape = shapes[i - shapesSize * 3];
     } else if (i >= shapesSize * 2) {
       shape = shapes[i - shapesSize * 2];
-    } else if (i >= shapesSize) {
-      shape = shapes[i - shapesSize];
+    } else if (i >= shapesSize * 1) {
+      shape = shapes[i - shapesSize * 1];
     }
 
     /* define color dynamically */
     let color = colors[i];
+
     const colorsSize = 4;
+
     if (i >= colorsSize * 2) {
       color = colors[i - colorsSize * 2];
-    } else if (i >= colorsSize) {
-      color = colors[i - colorsSize];
+    } else if (i >= colorsSize * 1) {
+      color = colors[i - colorsSize * 1];
     }
 
     elements.push(<Shape key={uuid()} shape={shape} color={color} />);
