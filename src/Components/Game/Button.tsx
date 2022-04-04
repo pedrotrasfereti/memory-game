@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, createRef } from "react";
 
 import { FaHeart as HeartIcon } from "react-icons/fa";
 
@@ -7,6 +7,8 @@ import styles from "./styles.module.scss";
 import IGameButtonPropTypes from "../../interfaces/GameButtonPropTypes";
 
 function Button({ id, shape, color, isAnimating }: IGameButtonPropTypes) {
+  const buttonRef = createRef<HTMLButtonElement>();
+
   const colorMap = {
     red: "#f01699",
     green: "#10ef78",
@@ -26,20 +28,34 @@ function Button({ id, shape, color, isAnimating }: IGameButtonPropTypes) {
     : `${styles.Button} ${styles[shape]}`;
 
   /* animate button */
-  const animate = () => {
-    console.log("Hey, I'm animating!!!");
+  const handleToggleAnimation = () => {
+    const node = buttonRef.current;
+
+    if (node) {
+      const removeDelay = 1000;
+
+      node.classList.toggle(styles.Animate);
+
+      setTimeout(() => {
+        node.classList.toggle(styles.Animate);
+      }, removeDelay);
+    }
   };
 
   useEffect(() => {
-    if (isAnimating) animate();
-  }, []);
+    if (isAnimating) {
+      handleToggleAnimation();
+    }
+  }, [isAnimating]);
 
   return (
     <button
       id={id}
+      ref={buttonRef}
       type="button"
       className={btnClassName}
       style={btnStyle}
+      onClick={handleToggleAnimation}
       aria-label={`${shape} and ${color} button`}
     >
       {isHeart && (

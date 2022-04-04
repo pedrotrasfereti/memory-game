@@ -57,7 +57,7 @@
     border: 0;
     transition: .3s;
 
-    &:hover {
+    &:hover:not(.Animate) {
       filter: brightness(80%);
     }
   }
@@ -85,5 +85,9 @@
       width: 100%;
       height: 100%;
     }
+  }
+
+  .Animate {
+    filter: brightness(150%) drop-shadow(0 0 5px #F1EFF5);
   }
 }

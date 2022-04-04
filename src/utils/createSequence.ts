@@ -11,7 +11,6 @@ const createSequence = (
     sequence[i] = elements[elementIdx];
   }
 
-  console.log("Sequence: ", sequence);
   return sequence;
 };
 
