@@ -12,7 +12,7 @@ function StartScreen() {
   }, []);
 
   return (
-    <div className={styles.StartScreen}>
+    <div id="start-screen" className={styles.StartScreen}>
       <button
         type="button"
         className={styles.StartButton}

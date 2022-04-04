@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
 
@@ -13,6 +13,8 @@ import IGameButtonPropTypes from "../../interfaces/GameButtonPropTypes";
 import createSequence from "../../utils/createSequence";
 
 function Game() {
+  const [countdown, setCountdown] = useState({ status: false, counter: 0 });
+
   const shapes = useSelector((state: RootState) => state.shapes.value);
   const quantity = useSelector((state: RootState) => state.quantity.value);
   const { inProgress } = useSelector((state: RootState) => state.game);
@@ -72,8 +74,44 @@ function Game() {
     }
   });
 
+  /* countdown */
+  const handleCountdown = () => {
+    setCountdown({ status: true, counter: 1 });
+
+    const delay = 1000;
+
+    setTimeout(() => {
+      setCountdown((prevState) => ({
+        ...prevState,
+        counter: prevState.counter + 1,
+      }));
+    }, delay);
+
+    setTimeout(() => {
+      setCountdown((prevState) => ({
+        ...prevState,
+        counter: prevState.counter + 1,
+      }));
+    }, delay * 2);
+
+    setTimeout(() => {
+      setCountdown({ status: false, counter: 0 });
+    }, delay * 3);
+  };
+
+  useEffect(() => {
+    if (inProgress) handleCountdown();
+  }, [inProgress]);
+
   return (
     <div className={`${styles.Game} ${gridTemplate}`}>
+      {countdown.status && (
+        <div id="counter-wrapper" className={styles.CounterWrapper}>
+          <div className={styles.Counter}>
+            <span>{countdown.counter}</span>
+          </div>
+        </div>
+      )}
       {inProgress || <StartScreen />}
       {buttons.map(({ id, shape, color, isAnimating }) => (
         <Button

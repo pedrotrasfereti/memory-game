@@ -90,4 +90,27 @@
   .Animate {
     filter: brightness(150%) drop-shadow(0 0 5px #F1EFF5);
   }
+
+  .CounterWrapper {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .Counter {
+      background-color:#201B2D;
+      box-shadow: 3px 3px 10px 1px #14111e90;
+      color: #F1EFF5;
+      height: 5rem;
+      width: 5rem;
+      border-radius: 50%;
+      display: inherit;
+      align-items: inherit;
+      justify-content: inherit;
+      font-family: 'Barlow', sans-serif;
+      font-size: 2.5em;
+    }
+  }
 }
