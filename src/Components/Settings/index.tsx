@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { VscSettings as SettingsIcon } from "react-icons/vsc";
@@ -9,8 +9,9 @@ import { setDifficulty } from "../../app/features/difficultySlice";
 import { RootState } from "../../app/store";
 
 import styles from "./styles.module.scss";
+import ISettingsPropTypes from "../../interfaces/SettingsPropTypes";
 
-function Settings() {
+function Settings({ disabled }: ISettingsPropTypes) {
   const [dropdown, setDropdown] = useState(false);
 
   const dispatch = useDispatch();
@@ -43,6 +44,14 @@ function Settings() {
       dispatch(setDifficulty(newDifficulty));
     }
   };
+
+  useEffect(() => {
+    if (disabled) setDropdown(false);
+  }, [disabled]);
+
+  const toggleDropdownClassName = disabled
+    ? `${styles.ToggleButton} ${styles.Disabled}`
+    : styles.ToggleButton;
 
   return dropdown ? (
     <div className={styles.Settings}>
@@ -141,9 +150,10 @@ function Settings() {
   ) : (
     <button
       type="button"
-      className={styles.ToggleButton}
+      className={toggleDropdownClassName}
       onClick={handleToggleDropdown}
       aria-label="toggle settings"
+      disabled={disabled}
     >
       <SettingsIcon className={styles.Icon} /> Show Settings
     </button>

@@ -43,7 +43,7 @@ function Button({ id, shape, color, isAnimating }: IGameButtonPropTypes) {
   };
 
   useEffect(() => {
-    if (isAnimating) {
+    if (isAnimating === true) {
       handleToggleAnimation();
     }
   }, [isAnimating]);

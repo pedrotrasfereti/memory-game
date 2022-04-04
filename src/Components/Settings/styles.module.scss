@@ -16,6 +16,13 @@
   }
 }
 
+.Disabled {
+  filter: brightness(50%);
+  text-shadow: none;
+  pointer-events: none;
+  user-select: none;
+}
+
 .Settings {
   position: relative;
   border-radius: 5px;

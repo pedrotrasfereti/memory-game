@@ -14,18 +14,19 @@ import createSequence from "../../utils/createSequence";
 
 function Game() {
   const [countdown, setCountdown] = useState({ status: false, counter: 0 });
+  const [sequence, setSequence] = useState<IGameButtonPropTypes[]>([]);
 
   const shapes = useSelector((state: RootState) => state.shapes.value);
   const quantity = useSelector((state: RootState) => state.quantity.value);
+  const difficulty = useSelector((state: RootState) => state.difficulty.value);
   const { inProgress } = useSelector((state: RootState) => state.game);
-  const colors = ["red", "green", "yellow", "blue"];
-
-  const buttons: IGameButtonPropTypes[] = [];
 
   /* create buttons */
-  for (let i = 0; i < quantity; i += 1) {
+  const buttons: IGameButtonPropTypes[] = [];
+
+  for (let index = 0; index < quantity; index += 1) {
     /* define shape dynamically */
-    let shape = shapes[i];
+    let shape = shapes[index];
 
     const shapesSize = shapes.length;
 
@@ -34,31 +35,102 @@ function Game() {
     if (shapesSize === 1) {
       const [firstElement] = shapes;
       shape = firstElement;
-    } else if (i >= shapesSize * 4) {
-      shape = shapes[i - shapesSize * 4];
-    } else if (i >= shapesSize * 3) {
-      shape = shapes[i - shapesSize * 3];
-    } else if (i >= shapesSize * 2) {
-      shape = shapes[i - shapesSize * 2];
-    } else if (i >= shapesSize * 1) {
-      shape = shapes[i - shapesSize * 1];
+    } else if (index >= shapesSize * 4) {
+      shape = shapes[index - shapesSize * 4];
+    } else if (index >= shapesSize * 3) {
+      shape = shapes[index - shapesSize * 3];
+    } else if (index >= shapesSize * 2) {
+      shape = shapes[index - shapesSize * 2];
+    } else if (index >= shapesSize * 1) {
+      shape = shapes[index - shapesSize * 1];
     }
 
     /* define color dynamically */
-    let color = colors[i];
+    const colors = ["red", "green", "yellow", "blue"];
+
+    let color = colors[index];
 
     const colorsSize = 4;
 
-    if (i >= colorsSize * 2) {
-      color = colors[i - colorsSize * 2];
-    } else if (i >= colorsSize * 1) {
-      color = colors[i - colorsSize * 1];
+    if (index >= colorsSize * 2) {
+      color = colors[index - colorsSize * 2];
+    } else if (index >= colorsSize * 1) {
+      color = colors[index - colorsSize * 1];
     }
 
-    buttons.push({ id: uuid(), color, shape, isAnimating: false });
+    buttons.push({
+      id: `${color}-${shape.toLowerCase()}-${index}`,
+      color,
+      shape,
+      isAnimating: false,
+    });
   }
 
-  /* grid containers for each occasion */
+  /* animate buttons in sequence */
+  const animate = (sequenceEl: IGameButtonPropTypes, delay: number) => {
+    setTimeout(() => {
+      const target = buttons.find((btn) => btn.id === sequenceEl.id);
+      if (target) {
+        target.isAnimating = true;
+        console.log(target);
+      }
+    }, delay);
+  };
+
+  const animateButtons = () => {
+    sequence.forEach((sequenceEl, index) => {
+      const delay = index * 1000;
+      animate(sequenceEl, delay);
+    });
+  };
+
+  /* create game sequence */
+  useEffect(() => {
+    const sequenceLengthMap = {
+      Easy: 4,
+      Normal: 6,
+      Hard: 8,
+    };
+
+    const sequenceLength =
+      sequenceLengthMap[difficulty as keyof typeof sequenceLengthMap];
+
+    if (buttons.length === quantity) {
+      setSequence(createSequence(buttons, sequenceLength));
+    }
+  }, [inProgress, shapes, quantity, difficulty]);
+
+  /* countdown */
+  const handleCountdown = () => {
+    setCountdown({ status: true, counter: 3 });
+
+    const delay = 1000;
+
+    setTimeout(() => {
+      setCountdown((prevState) => ({
+        ...prevState,
+        counter: prevState.counter - 1,
+      }));
+    }, delay);
+
+    setTimeout(() => {
+      setCountdown((prevState) => ({
+        ...prevState,
+        counter: prevState.counter - 1,
+      }));
+    }, delay * 2);
+
+    setTimeout(() => {
+      setCountdown({ status: false, counter: 0 });
+      animateButtons();
+    }, delay * 3);
+  };
+
+  useEffect(() => {
+    if (inProgress) handleCountdown();
+  }, [inProgress]);
+
+  /* styles - grid containers for each occasion */
   const gridTemplatesMap = {
     4: styles["Grid--2C-by-2R"],
     9: styles["Grid--3C-by-3R"],
@@ -66,42 +138,6 @@ function Game() {
 
   const gridTemplate =
     gridTemplatesMap[quantity as keyof typeof gridTemplatesMap];
-
-  /* create game sequence when elements are created */
-  useEffect(() => {
-    if (buttons.length === quantity) {
-      createSequence(buttons, quantity);
-    }
-  });
-
-  /* countdown */
-  const handleCountdown = () => {
-    setCountdown({ status: true, counter: 1 });
-
-    const delay = 1000;
-
-    setTimeout(() => {
-      setCountdown((prevState) => ({
-        ...prevState,
-        counter: prevState.counter + 1,
-      }));
-    }, delay);
-
-    setTimeout(() => {
-      setCountdown((prevState) => ({
-        ...prevState,
-        counter: prevState.counter + 1,
-      }));
-    }, delay * 2);
-
-    setTimeout(() => {
-      setCountdown({ status: false, counter: 0 });
-    }, delay * 3);
-  };
-
-  useEffect(() => {
-    if (inProgress) handleCountdown();
-  }, [inProgress]);
 
   return (
     <div className={`${styles.Game} ${gridTemplate}`}>
@@ -116,7 +152,7 @@ function Game() {
       {buttons.map(({ id, shape, color, isAnimating }) => (
         <Button
           id={id}
-          key={id}
+          key={uuid()}
           shape={shape}
           color={color}
           isAnimating={isAnimating}
