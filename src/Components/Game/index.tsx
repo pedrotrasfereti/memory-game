@@ -20,6 +20,7 @@ function Game() {
 
   const buttons: IGameButtonPropTypes[] = [];
 
+  /* create buttons */
   for (let i = 0; i < quantity; i += 1) {
     /* define shape dynamically */
     let shape = shapes[i];
@@ -27,7 +28,7 @@ function Game() {
     const shapesSize = shapes.length;
 
     // look for a way to simplify this!!
-    // q: what is the number im using to multiply shapes.length?
+    // tip: what is the number im using to multiply shapes.length?
     if (shapesSize === 1) {
       const [firstElement] = shapes;
       shape = firstElement;
