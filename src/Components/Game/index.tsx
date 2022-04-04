@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
 
@@ -6,16 +6,19 @@ import styles from "./styles.module.scss";
 
 import { RootState } from "../../app/store";
 
-import Shape from "./Shape";
+import Button from "./Button";
 import StartScreen from "./StartScreen";
+
+import IGameButtonPropTypes from "../../interfaces/GameButtonPropTypes";
+import createSequence from "../../utils/createSequence";
 
 function Game() {
   const shapes = useSelector((state: RootState) => state.shapes.value);
   const quantity = useSelector((state: RootState) => state.quantity.value);
-  const game = useSelector((state: RootState) => state.game);
-
+  const { inProgress } = useSelector((state: RootState) => state.game);
   const colors = ["red", "green", "yellow", "blue"];
-  const elements: JSX.Element[] = [];
+
+  const buttons: IGameButtonPropTypes[] = [];
 
   for (let i = 0; i < quantity; i += 1) {
     /* define shape dynamically */
@@ -49,7 +52,7 @@ function Game() {
       color = colors[i - colorsSize * 1];
     }
 
-    elements.push(<Shape key={uuid()} shape={shape} color={color} />);
+    buttons.push({ id: uuid(), color, shape, isAnimating: false });
   }
 
   /* grid containers for each occasion */
@@ -61,10 +64,25 @@ function Game() {
   const gridTemplate =
     gridTemplatesMap[quantity as keyof typeof gridTemplatesMap];
 
+  /* create game sequence when elements are created */
+  useEffect(() => {
+    if (buttons.length === quantity) {
+      createSequence(buttons, quantity);
+    }
+  });
+
   return (
     <div className={`${styles.Game} ${gridTemplate}`}>
-      {game.inProgress || <StartScreen />}
-      {elements.map((element) => element)}
+      {inProgress || <StartScreen />}
+      {buttons.map(({ id, shape, color, isAnimating }) => (
+        <Button
+          id={id}
+          key={id}
+          shape={shape}
+          color={color}
+          isAnimating={isAnimating}
+        />
+      ))}
     </div>
   );
 }
