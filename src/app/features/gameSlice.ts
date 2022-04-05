@@ -5,6 +5,7 @@ export interface IGameState {
   clickedIds: string[];
   gameResult: string;
   score: number;
+  best: number;
 }
 
 const initialState: IGameState = {
@@ -12,6 +13,7 @@ const initialState: IGameState = {
   clickedIds: [],
   gameResult: "",
   score: 0,
+  best: 0,
 };
 
 export const gameSlice = createSlice({
@@ -31,10 +33,13 @@ export const gameSlice = createSlice({
       state.gameResult = action.payload;
     },
     addScore: (state, action: PayloadAction<number>) => {
-      state.score = action.payload;
+      state.score += action.payload;
     },
     clearScore: (state) => {
       state.score = 0;
+    },
+    setBest: (state, action: PayloadAction<number>) => {
+      state.best = action.payload;
     },
   },
 });
@@ -46,6 +51,7 @@ export const {
   setGameResult,
   addScore,
   clearScore,
+  setBest,
 } = gameSlice.actions;
 
 export default gameSlice.reducer;

@@ -19,7 +19,9 @@ import matchButtons from "../../helpers/matchButtons";
 
 import {
   addScore,
+  clearClicked,
   clearScore,
+  setBest,
   setGameResult,
   toggleInProgress,
 } from "../../app/features/gameSlice";
@@ -47,7 +49,7 @@ function Game() {
     countdownInitialState
   );
 
-  const { inProgress, clickedIds } = useSelector(
+  const { inProgress, clickedIds, score, best } = useSelector(
     (state: RootState) => state.game
   );
 
@@ -181,9 +183,7 @@ function Game() {
     if (inProgress && buttons.length) createGameSequence();
   }, [inProgress]);
 
-  /*
-    5. check if sequence buttons should animate
-  */
+  /* 5. check if sequence buttons should animate */
   useEffect(() => {
     if (sequence.isAnimating) animateButtons();
   }, [sequence]);
@@ -197,18 +197,19 @@ function Game() {
       sequence.value.length > 0 &&
       clickedIds.length === sequence.value.length
     ) {
+      /* reset clicked array */
+      dispatch(clearClicked());
+
       const playerWon = matchButtons(sequence.value, clickedIds);
       const gameResult = playerWon ? "player won" : "player lost";
 
       dispatch(setGameResult(gameResult));
 
-      /* starting over */
-      // setSequence({ value: [], isAnimating: false });
-      // dispatch(clearClicked());
-
       if (playerWon) {
-        dispatch(addScore(1000));
+        dispatch(addScore(100));
+        createGameSequence();
       } else {
+        if (score > best) dispatch(setBest(score));
         dispatch(clearScore());
         dispatch(toggleInProgress());
       }
