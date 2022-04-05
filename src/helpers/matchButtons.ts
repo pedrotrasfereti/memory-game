@@ -6,22 +6,22 @@ import IGameButtonPropTypes from "../interfaces/GameButtonPropTypes";
  *
  * @param sequence - An array of the game sequence buttons.
  * @param clickedIds - An array of the clicked button ids.
- * @returns A boolean.
+ * @returns A boolean representing the game result (won/lost).
  */
 const matchButtons = (
   sequence: IGameButtonPropTypes[],
   clickedIds: string[]
 ) => {
-  let gameResult = true;
+  let playerWon = true;
 
   sequence.forEach((el, index) => {
     /* clicked button corresponding to the sequence button */
     const matchId = clickedIds[index];
 
-    if (matchId !== el.id) gameResult = false;
+    if (matchId !== el.id) playerWon = false;
   });
 
-  return gameResult;
+  return playerWon;
 };
 
 export default matchButtons;

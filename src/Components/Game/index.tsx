@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
 
 import styles from "./styles.module.scss";
@@ -7,7 +7,7 @@ import styles from "./styles.module.scss";
 import { RootState } from "../../app/store";
 
 import Button from "./Button";
-import StartScreen from "./StartScreen";
+import Modal from "./Modal";
 
 import createSequence from "../../helpers/createSequence";
 import createButtons from "../../helpers/createButtons";
@@ -16,6 +16,13 @@ import IGameButtonPropTypes from "../../interfaces/GameButtonPropTypes";
 import ISequenceState from "../../interfaces/SequenceState";
 import ICountdownState from "../../interfaces/CountdownState";
 import matchButtons from "../../helpers/matchButtons";
+
+import {
+  addScore,
+  clearScore,
+  setGameResult,
+  toggleInProgress,
+} from "../../app/features/gameSlice";
 
 const sequenceInitialState: ISequenceState = {
   value: [],
@@ -28,6 +35,8 @@ const countdownInitialState: ICountdownState = {
 };
 
 function Game() {
+  const dispatch = useDispatch();
+
   /* game elements and status */
   const [buttons, setButtons] = useState<IGameButtonPropTypes[]>([]);
 
@@ -47,7 +56,7 @@ function Game() {
   const quantity = useSelector((state: RootState) => state.quantity.value);
   const difficulty = useSelector((state: RootState) => state.difficulty.value);
 
-  /* 7. animate buttons in sequence */
+  /* 6. animate buttons in sequence */
   const clearAnimation = (
     index: number,
     element: IGameButtonPropTypes,
@@ -114,7 +123,7 @@ function Game() {
     });
   };
 
-  /* 5. countdown */
+  /* 4. countdown */
   const handleCountdown = () => {
     setCountdown({ status: true, counter: 3 });
 
@@ -173,14 +182,14 @@ function Game() {
   }, [inProgress]);
 
   /*
-    6. check if sequence buttons should animate
+    5. check if sequence buttons should animate
   */
   useEffect(() => {
     if (sequence.isAnimating) animateButtons();
   }, [sequence]);
 
   /*
-    6. when player clicks are equal to the sequence length, check
+    7. when player clicks are equal to the sequence length, check
     the game result
   */
   useEffect(() => {
@@ -188,12 +197,20 @@ function Game() {
       sequence.value.length > 0 &&
       clickedIds.length === sequence.value.length
     ) {
-      const gameResult = matchButtons(sequence.value, clickedIds);
+      const playerWon = matchButtons(sequence.value, clickedIds);
+      const gameResult = playerWon ? "player won" : "player lost";
 
-      if (gameResult) {
-        alert("You won!");
+      dispatch(setGameResult(gameResult));
+
+      /* starting over */
+      // setSequence({ value: [], isAnimating: false });
+      // dispatch(clearClicked());
+
+      if (playerWon) {
+        dispatch(addScore(1000));
       } else {
-        alert("You lose!");
+        dispatch(clearScore());
+        dispatch(toggleInProgress());
       }
     }
   }, [clickedIds]);
@@ -221,7 +238,7 @@ function Game() {
           </div>
         </div>
       )}
-      {inProgress || <StartScreen />}
+      {inProgress || <Modal />}
       {buttons.map(({ id, shape, color, isAnimating }) => (
         <Button
           id={id}

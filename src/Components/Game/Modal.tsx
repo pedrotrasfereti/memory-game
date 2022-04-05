@@ -1,28 +1,31 @@
 import React, { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleInProgress } from "../../app/features/gameSlice";
+import { RootState } from "../../app/store";
 
 import styles from "./styles.module.scss";
 
-function StartScreen() {
+function Modal() {
   const dispatch = useDispatch();
+
+  const { gameResult } = useSelector((state: RootState) => state.game);
 
   const handleToggleInProgress = useCallback(() => {
     dispatch(toggleInProgress());
   }, []);
 
   return (
-    <div id="start-screen" className={styles.StartScreen}>
+    <div id="game-modal" className={styles.Modal}>
       <button
         type="button"
-        className={styles.StartButton}
+        className={styles.Button}
         onClick={handleToggleInProgress}
-        aria-label="start button"
+        aria-label="start or retry button"
       >
-        Start!
+        {gameResult === "player lost" ? "Retry" : "Start!"}
       </button>
     </div>
   );
 }
 
-export default StartScreen;
+export default Modal;

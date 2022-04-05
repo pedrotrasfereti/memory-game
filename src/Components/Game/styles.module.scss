@@ -28,7 +28,7 @@
   width: 15rem;
   box-shadow: 6px 6px 20px 1px #14111E;
 
-  .StartScreen {
+  .Modal {
     background-color: #28223c63;
     display: flex;
     align-items: center;
@@ -39,7 +39,7 @@
     height: 100%;
     z-index: 99;
 
-    .StartButton {
+    .Button {
       cursor: pointer;
       background: #d5d2da;
       color: #14111E;
