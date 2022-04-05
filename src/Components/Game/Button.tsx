@@ -1,34 +1,21 @@
 import React, { useEffect, createRef } from "react";
+import { useDispatch } from "react-redux";
 
 import { FaHeart as HeartIcon } from "react-icons/fa";
 
 import styles from "./styles.module.scss";
 
+import { addClicked } from "../../app/features/gameSlice";
+
 import IGameButtonPropTypes from "../../interfaces/GameButtonPropTypes";
 
 function Button({ id, shape, color, isAnimating }: IGameButtonPropTypes) {
+  const dispatch = useDispatch();
+
   const buttonRef = createRef<HTMLButtonElement>();
 
-  const colorMap = {
-    red: "#f01699",
-    green: "#10ef78",
-    yellow: "#e1ed0c",
-    blue: "#5271FF",
-  };
-
-  const shapeColor = colorMap[color as keyof typeof colorMap];
-
-  /* JSX element properties */
-  const isHeart = shape === "Heart";
-
-  const btnStyle = isHeart ? {} : { backgroundColor: shapeColor };
-
-  const btnClassName = isHeart
-    ? styles.HeartButton
-    : `${styles.Button} ${styles[shape]}`;
-
-  /* animate button */
-  const handleToggleAnimation = () => {
+  /* add animate class to button */
+  const animate = () => {
     const node = buttonRef.current;
 
     if (node) {
@@ -42,11 +29,41 @@ function Button({ id, shape, color, isAnimating }: IGameButtonPropTypes) {
     }
   };
 
+  /* listen to changes made to isAnimating by game */
   useEffect(() => {
     if (isAnimating === true) {
-      handleToggleAnimation();
+      animate();
     }
   }, [isAnimating]);
+
+  /* handle click */
+  const handleClick = () => {
+    if (buttonRef.current) {
+      // annotate button id to "clicked" array
+      dispatch(addClicked(buttonRef.current.id));
+
+      // animate button
+      animate();
+    }
+  };
+
+  /* styles - button className */
+  const colorMap = {
+    red: "#f01699",
+    green: "#10ef78",
+    yellow: "#e1ed0c",
+    blue: "#5271FF",
+  };
+
+  const shapeColor = colorMap[color as keyof typeof colorMap];
+
+  const isHeart = shape === "Heart";
+
+  const btnStyle = isHeart ? {} : { backgroundColor: shapeColor };
+
+  const btnClassName = isHeart
+    ? styles.HeartButton
+    : `${styles.Button} ${styles[shape]}`;
 
   return (
     <button
@@ -55,8 +72,8 @@ function Button({ id, shape, color, isAnimating }: IGameButtonPropTypes) {
       type="button"
       className={btnClassName}
       style={btnStyle}
-      onClick={handleToggleAnimation}
-      aria-label={`${shape} and ${color} button`}
+      onClick={handleClick}
+      aria-label={id.replaceAll("-", " ")}
     >
       {isHeart && (
         <HeartIcon

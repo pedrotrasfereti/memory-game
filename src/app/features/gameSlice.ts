@@ -1,11 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface IGameState {
   inProgress: boolean;
+  clickedIds: string[];
 }
 
 const initialState: IGameState = {
   inProgress: false,
+  clickedIds: [],
 };
 
 export const gameSlice = createSlice({
@@ -15,9 +17,15 @@ export const gameSlice = createSlice({
     toggleInProgress: (state) => {
       state.inProgress = !state.inProgress;
     },
+    addClicked: (state, action: PayloadAction<string>) => {
+      state.clickedIds.push(action.payload);
+    },
+    clearClicked: (state) => {
+      state.clickedIds = [];
+    },
   },
 });
 
-export const { toggleInProgress } = gameSlice.actions;
+export const { toggleInProgress, addClicked, clearClicked } = gameSlice.actions;
 
 export default gameSlice.reducer;
