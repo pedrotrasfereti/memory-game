@@ -9,78 +9,109 @@ import { RootState } from "../../app/store";
 import Button from "./Button";
 import StartScreen from "./StartScreen";
 
-import IGameButtonPropTypes from "../../interfaces/GameButtonPropTypes";
 import createSequence from "../../utils/createSequence";
+import createButtons from "../../utils/createButtons";
+
+import IGameButtonPropTypes from "../../interfaces/GameButtonPropTypes";
+import ISequenceState from "../../interfaces/SequenceState";
+import ICountdownState from "../../interfaces/CountdownState";
+
+const sequenceInitialState: ISequenceState = {
+  value: [],
+  isAnimating: false,
+};
+
+const countdownInitialState: ICountdownState = {
+  status: false,
+  counter: 0,
+};
 
 function Game() {
-  const [countdown, setCountdown] = useState({ status: false, counter: 0 });
-  const [sequence, setSequence] = useState<IGameButtonPropTypes[]>([]);
+  /* game elements and status */
+  const [buttons, setButtons] = useState<IGameButtonPropTypes[]>([]);
 
+  const [sequence, setSequence] =
+    useState<ISequenceState>(sequenceInitialState);
+
+  const [countdown, setCountdown] = useState<ICountdownState>(
+    countdownInitialState
+  );
+
+  /* game settings */
   const shapes = useSelector((state: RootState) => state.shapes.value);
   const quantity = useSelector((state: RootState) => state.quantity.value);
   const difficulty = useSelector((state: RootState) => state.difficulty.value);
   const { inProgress } = useSelector((state: RootState) => state.game);
 
-  /* create buttons */
-  const buttons: IGameButtonPropTypes[] = [];
-
-  for (let index = 0; index < quantity; index += 1) {
-    /* define shape dynamically */
-    let shape = shapes[index];
-
-    const shapesSize = shapes.length;
-
-    // look for a way to simplify this!!
-    // tip: what is the number im using to multiply shapes.length?
-    if (shapesSize === 1) {
-      const [firstElement] = shapes;
-      shape = firstElement;
-    } else if (index >= shapesSize * 4) {
-      shape = shapes[index - shapesSize * 4];
-    } else if (index >= shapesSize * 3) {
-      shape = shapes[index - shapesSize * 3];
-    } else if (index >= shapesSize * 2) {
-      shape = shapes[index - shapesSize * 2];
-    } else if (index >= shapesSize * 1) {
-      shape = shapes[index - shapesSize * 1];
-    }
-
-    /* define color dynamically */
-    const colors = ["red", "green", "yellow", "blue"];
-
-    let color = colors[index];
-
-    const colorsSize = 4;
-
-    if (index >= colorsSize * 2) {
-      color = colors[index - colorsSize * 2];
-    } else if (index >= colorsSize * 1) {
-      color = colors[index - colorsSize * 1];
-    }
-
-    buttons.push({
-      id: `${color}-${shape.toLowerCase()}-${index}`,
-      color,
-      shape,
-      isAnimating: false,
-    });
-  }
+  /* create game buttons */
+  useEffect(() => {
+    setButtons(createButtons(shapes, quantity));
+  }, [shapes, quantity, difficulty]);
 
   /* animate buttons in sequence */
-  const animate = (sequenceEl: IGameButtonPropTypes, delay: number) => {
+  const clearAnimation = (
+    index: number,
+    element: IGameButtonPropTypes,
+    delay: number
+  ) => {
     setTimeout(() => {
-      const target = buttons.find((btn) => btn.id === sequenceEl.id);
-      if (target) {
-        target.isAnimating = true;
-        console.log(target);
+      const targetIndex = buttons.findIndex(
+        (button) => button.id === element.id
+      );
+
+      const targetBtn = buttons[targetIndex];
+
+      if (targetBtn) {
+        const updatedButtons = [...buttons]; // create copy buttons
+        const updatedBtn = { ...targetBtn }; // create copy of target button
+        updatedBtn.isAnimating = false; // change isAnimating value
+        updatedButtons[targetIndex] = updatedBtn; // replace prev button with new
+        setButtons(updatedButtons); // finally, update buttons
+
+        if (index === sequence.value.length - 1) {
+          setSequence((prevState) => ({
+            ...prevState,
+            isAnimating: false,
+          }));
+        }
+      }
+    }, delay);
+  };
+
+  const animate = (element: IGameButtonPropTypes, delay: number) => {
+    setTimeout(() => {
+      const targetIndex = buttons.findIndex(
+        (button) => button.id === element.id
+      );
+
+      const targetBtn = buttons[targetIndex];
+
+      if (targetBtn) {
+        const updatedButtons = [...buttons]; // create copy buttons
+        const updatedBtn = { ...targetBtn }; // create copy of target button
+        updatedBtn.isAnimating = true; // change isAnimating value
+        updatedButtons[targetIndex] = updatedBtn; // replace prev button with new
+        setButtons(updatedButtons); // finally, update buttons
       }
     }, delay);
   };
 
   const animateButtons = () => {
-    sequence.forEach((sequenceEl, index) => {
-      const delay = index * 1000;
-      animate(sequenceEl, delay);
+    sequence.value.forEach((element, index) => {
+      /*
+        Animations must be 1 second apart of each other, allowing the
+        player to properly identify the buttons.
+      */
+      const delayAnimate = index * 1000;
+      animate(element, delayAnimate);
+
+      /*
+        In order for all animations to work properly, the "animate" style
+        must be cleared once the button has finished animating, which is
+        approximately the delay time.
+      */
+      const delayClear = index * 1000 + 800;
+      clearAnimation(index, element, delayClear);
     });
   };
 
@@ -96,9 +127,12 @@ function Game() {
       sequenceLengthMap[difficulty as keyof typeof sequenceLengthMap];
 
     if (buttons.length === quantity) {
-      setSequence(createSequence(buttons, sequenceLength));
+      setSequence((prevState) => ({
+        ...prevState,
+        value: createSequence(buttons, sequenceLength),
+      }));
     }
-  }, [inProgress, shapes, quantity, difficulty]);
+  }, [buttons]);
 
   /* countdown */
   const handleCountdown = () => {
@@ -122,6 +156,7 @@ function Game() {
 
     setTimeout(() => {
       setCountdown({ status: false, counter: 0 });
+      setSequence((prevState) => ({ ...prevState, isAnimating: true }));
       animateButtons();
     }, delay * 3);
   };
@@ -139,8 +174,13 @@ function Game() {
   const gridTemplate =
     gridTemplatesMap[quantity as keyof typeof gridTemplatesMap];
 
+  /* styles - allow/disallow user clicks */
+  const gameClassName = sequence.isAnimating
+    ? `${styles.Game} ${gridTemplate} ${styles.Playing}`
+    : `${styles.Game} ${gridTemplate}`;
+
   return (
-    <div className={`${styles.Game} ${gridTemplate}`}>
+    <div className={gameClassName}>
       {countdown.status && (
         <div id="counter-wrapper" className={styles.CounterWrapper}>
           <div className={styles.Counter}>
