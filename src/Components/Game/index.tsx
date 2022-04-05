@@ -25,6 +25,7 @@ import {
   setGameResult,
   toggleInProgress,
 } from "../../app/features/gameSlice";
+import calculateTotalPoints from "../../helpers/calculateTotalPoints";
 
 const sequenceInitialState: ISequenceState = {
   value: [],
@@ -206,7 +207,13 @@ function Game() {
       dispatch(setGameResult(gameResult));
 
       if (playerWon) {
-        dispatch(addScore(100));
+        const totalPoints = calculateTotalPoints(
+          difficulty,
+          quantity,
+          shapes.length
+        );
+
+        dispatch(addScore(totalPoints));
         createGameSequence();
       } else {
         if (score > best) dispatch(setBest(score));
