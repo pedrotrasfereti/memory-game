@@ -9,8 +9,8 @@ import { RootState } from "../../app/store";
 import Button from "./Button";
 import StartScreen from "./StartScreen";
 
-import createSequence from "../../utils/createSequence";
-import createButtons from "../../utils/createButtons";
+import createSequence from "../../helpers/createSequence";
+import createButtons from "../../helpers/createButtons";
 
 import IGameButtonPropTypes from "../../interfaces/GameButtonPropTypes";
 import ISequenceState from "../../interfaces/SequenceState";
