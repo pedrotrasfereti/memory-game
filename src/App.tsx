@@ -1,10 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-import Footer from "./Components/Footer";
-import Game from "./Components/Game";
-import Settings from "./Components/Settings";
-import Score from "./Components/Score";
+import Footer from "./components/Footer";
+import Game from "./components/Game";
+import Settings from "./components/Settings";
+import Score from "./components/Score";
 
 import "./App.scss";
 import { RootState } from "./app/store";
