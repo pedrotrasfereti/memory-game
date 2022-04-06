@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleInProgress } from "../../app/features/gameSlice";
-import { RootState } from "../../app/store";
+import { toggleInProgress } from "../../redux/features/gameSlice";
+import { RootState } from "../../redux/store";
 
 import styles from "./styles.module.scss";
 

@@ -37,7 +37,7 @@ const createButtons = (
     }
 
     /* define color dynamically */
-    const colors = ["red", "green", "yellow", "blue"];
+    const colors = ["blue", "green", "red", "yellow"];
 
     let color = colors[index];
 

@@ -1,3 +1,5 @@
+@import './variables';
+
 @media only screen and (min-width: 740px) {
   .App>h1 {
     font-size: 6.1em !important;
@@ -5,7 +7,7 @@
 }
 
 .App {
-  background-color: #15121E;
+  background-color: $background;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
@@ -15,7 +17,7 @@
   gap: 3rem;
 
   h1 {
-    color: #F1EFF5;
+    color: $heading;
     font-family: 'Sacramento', cursive;
     font-size: 14vw;
     margin: 3rem 0 0 0;
@@ -27,15 +29,15 @@
   100% {
     /* Larger blur radius */
     text-shadow:
-      0 0 4px #F1EFF5,
-      0 0 40px #FF79C6,
-      0 0 80px #FF79C6,
+      0 0 4px $white-glow,
+      0 0 40px $pink-glow,
+      0 0 80px $pink-glow,
   }
   0% {
     /* Smaller blur radius */
     text-shadow:
-      0 0 2px #F1EFF5,
-      0 0 10px #FF79C6,
-      0 0 45px #FF79C6,
+      0 0 2px $white-glow,
+      0 0 10px $pink-glow,
+      0 0 45px $pink-glow,
   }
 }

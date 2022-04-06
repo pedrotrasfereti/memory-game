@@ -1,3 +1,5 @@
+@import '../../styles/variables';
+
 @media only screen and (max-width: 420px) {
   .Score>.Label {
     font-size: 2.1em !important;
@@ -10,14 +12,19 @@
   }
 
   span {
-    color: #F1EFF5;
+    color: $text;
     font-family: 'Barlow', sans-serif;
     font-size: .7em;
   }
 
   .Label {
-    text-shadow: 0 0 7px #F1EFF5;
+    text-shadow: 0 0 10px $text-glow;
     font-family: 'Sacramento', cursive;
     font-size: 2.3em;
+    transition: .5s;
+
+    &:hover {
+      text-shadow: 0 0 4px $text-glow;
+    }
   }
 }

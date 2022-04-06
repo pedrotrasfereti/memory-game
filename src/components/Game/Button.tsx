@@ -5,7 +5,7 @@ import { FaHeart as HeartIcon } from "react-icons/fa";
 
 import styles from "./styles.module.scss";
 
-import { addClicked } from "../../app/features/gameSlice";
+import { addClicked } from "../../redux/features/gameSlice";
 
 import IGameButtonPropTypes from "../../interfaces/GameButtonPropTypes";
 
@@ -31,9 +31,7 @@ function Button({ id, shape, color, isAnimating }: IGameButtonPropTypes) {
 
   /* listen to changes made to isAnimating by game */
   useEffect(() => {
-    if (isAnimating === true) {
-      animate();
-    }
+    if (isAnimating) animate();
   }, [isAnimating]);
 
   /* handle click */
@@ -49,10 +47,10 @@ function Button({ id, shape, color, isAnimating }: IGameButtonPropTypes) {
 
   /* styles - button className */
   const colorMap = {
-    red: "#f01699",
-    green: "#10ef78",
-    yellow: "#e1ed0c",
-    blue: "#5271FF",
+    blue: "#3D8DCF",
+    green: "#36B93C",
+    red: "#CF3D5D",
+    yellow: "#CFAA3D",
   };
 
   const shapeColor = colorMap[color as keyof typeof colorMap];

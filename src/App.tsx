@@ -6,8 +6,8 @@ import Game from "./components/Game";
 import Settings from "./components/Settings";
 import Score from "./components/Score";
 
-import "./App.scss";
-import { RootState } from "./app/store";
+import "./styles/App.scss";
+import { RootState } from "./redux/store";
 
 function App() {
   const { inProgress } = useSelector((state: RootState) => state.game);

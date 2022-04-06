@@ -4,7 +4,7 @@ import { v4 as uuid } from "uuid";
 
 import styles from "./styles.module.scss";
 
-import { RootState } from "../../app/store";
+import { RootState } from "../../redux/store";
 
 import Button from "./Button";
 import Modal from "./Modal";
@@ -24,7 +24,7 @@ import {
   setBest,
   setGameResult,
   toggleInProgress,
-} from "../../app/features/gameSlice";
+} from "../../redux/features/gameSlice";
 import calculateTotalPoints from "../../helpers/calculateTotalPoints";
 
 const sequenceInitialState: ISequenceState = {

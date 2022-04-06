@@ -1,3 +1,5 @@
+@import '../../styles/variables';
+
 @media only screen and (max-width: 420px) {
   .Footer>span {
     font-size: .9em !important;
@@ -8,7 +10,7 @@
   padding: 2rem 0;
 
   span {
-    color: #907FAD;
+    color: $text-alt;
     font-family: 'Barlow', sans-serif;
   }
 }

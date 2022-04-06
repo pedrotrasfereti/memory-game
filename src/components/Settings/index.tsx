@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { RootState } from "../../app/store";
-import { addShape, removeShape } from "../../app/features/shapesSlice";
-import { setQuantity } from "../../app/features/quantitySlice";
-import { setDifficulty } from "../../app/features/difficultySlice";
+import { RootState } from "../../redux/store";
+import { addShape, removeShape } from "../../redux/features/shapesSlice";
+import { setQuantity } from "../../redux/features/quantitySlice";
+import { setDifficulty } from "../../redux/features/difficultySlice";
 
 import styles from "./styles.module.scss";
 
