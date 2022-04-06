@@ -127,18 +127,20 @@ function Game() {
   };
 
   /* 4. countdown */
+  const decrementCount = () => {
+    setCountdown((prevState) => ({
+      ...prevState,
+      counter: prevState.counter - 1,
+    }));
+  };
+
   const handleCountdown = () => {
     setCountdown({ status: true, counter: 3 });
 
     const delay = 1000;
 
-    const decrement = setCountdown((prevState) => ({
-      ...prevState,
-      counter: prevState.counter - 1,
-    }));
-
-    setTimeout(() => decrement, delay);
-    setTimeout(() => decrement, delay * 2);
+    setTimeout(() => decrementCount(), delay);
+    setTimeout(() => decrementCount(), delay * 2);
 
     setTimeout(() => {
       setCountdown({ status: false, counter: 0 }); // stop count
