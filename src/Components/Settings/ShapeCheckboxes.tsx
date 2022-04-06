@@ -1,13 +1,5 @@
 import React from "react";
 
-// import {
-//   BsFillSquareFill as SquareIcon,
-//   BsFillDiamondFill as DiamondIcon,
-//   BsFillCircleFill as CircleIcon,
-// } from "react-icons/bs";
-
-// import { FaHeart as HeartIcon } from "react-icons/fa";
-
 import IShapeCheckboxesPropTypes from "../../interfaces/ShapeCheckboxesPropTypes";
 
 import styles from "./styles.module.scss";

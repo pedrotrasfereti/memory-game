@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { RootState } from "../../app/store";
@@ -25,9 +25,9 @@ function Settings({ disabled }: ISettingsPropTypes) {
   const quantity = useSelector((state: RootState) => state.quantity.value);
   const difficulty = useSelector((state: RootState) => state.difficulty.value);
 
-  const handleToggleDropdown = useCallback(() => {
+  const handleToggleDropdown = () => {
     setDropdown((prevState) => !prevState);
-  }, []);
+  };
 
   const handleToggleShape = (shapeName: string) => {
     if (shapes.includes(shapeName) && shapes.length >= 2) {
