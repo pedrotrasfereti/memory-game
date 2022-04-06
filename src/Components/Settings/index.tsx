@@ -1,20 +1,26 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { VscSettings as SettingsIcon } from "react-icons/vsc";
-
-import { setQuantity } from "../../app/features/quantitySlice";
-import { addShape, removeShape } from "../../app/features/shapesSlice";
-import { setDifficulty } from "../../app/features/difficultySlice";
 import { RootState } from "../../app/store";
+import { addShape, removeShape } from "../../app/features/shapesSlice";
+import { setQuantity } from "../../app/features/quantitySlice";
+import { setDifficulty } from "../../app/features/difficultySlice";
 
 import styles from "./styles.module.scss";
+
 import ISettingsPropTypes from "../../interfaces/SettingsPropTypes";
 
+import ShapeCheckboxes from "./ShapeCheckboxes";
+import QuantitySelect from "./QuantitySelect";
+import DifficultySelect from "./DifficultySelect";
+import ShowSettingsButton from "./ShowSettingsButton";
+import HideSettingsButton from "./HideSettingsButton";
+
 function Settings({ disabled }: ISettingsPropTypes) {
+  const dispatch = useDispatch();
+
   const [dropdown, setDropdown] = useState(false);
 
-  const dispatch = useDispatch();
   const shapes = useSelector((state: RootState) => state.shapes.value);
   const quantity = useSelector((state: RootState) => state.quantity.value);
   const difficulty = useSelector((state: RootState) => state.difficulty.value);
@@ -49,10 +55,6 @@ function Settings({ disabled }: ISettingsPropTypes) {
     if (disabled) setDropdown(false);
   }, [disabled]);
 
-  const toggleDropdownClassName = disabled
-    ? `${styles.ToggleButton} ${styles.Disabled}`
-    : styles.ToggleButton;
-
   return dropdown ? (
     <div className={styles.Settings}>
       <h2>Settings</h2>
@@ -60,103 +62,29 @@ function Settings({ disabled }: ISettingsPropTypes) {
       <hr />
 
       <div className={styles.Container}>
-        <div id="shape-checkbox-wrapper" className={styles.SettingWrapper}>
-          <span>Include Shapes:</span>
-          <input
-            type="checkbox"
-            name="square shape"
-            id="square-shape"
-            onClick={() => handleToggleShape("Square")}
-            className={
-              shapes.includes("Square")
-                ? `${styles.SquareShape} ${styles.ShapeChecked}`
-                : styles.SquareShape
-            }
-          />
-          <input
-            type="checkbox"
-            name="diamond shape"
-            id="diamond-shape"
-            onClick={() => handleToggleShape("Diamond")}
-            className={
-              shapes.includes("Diamond")
-                ? `${styles.DiamondShape} ${styles.ShapeChecked}`
-                : styles.DiamondShape
-            }
-          />
-          <input
-            type="checkbox"
-            name="circle shape"
-            id="circle-shape"
-            onClick={() => handleToggleShape("Circle")}
-            className={
-              shapes.includes("Circle")
-                ? `${styles.CircleShape} ${styles.ShapeChecked}`
-                : styles.CircleShape
-            }
-          />
-          <input
-            type="checkbox"
-            name="heart shape"
-            id="heart-shape"
-            onClick={() => handleToggleShape("Heart")}
-            className={
-              shapes.includes("Heart")
-                ? `${styles.HeartShape} ${styles.ShapeChecked}`
-                : styles.HeartShape
-            }
-          />
-        </div>
+        <ShapeCheckboxes
+          shapes={shapes}
+          handleToggleShape={handleToggleShape}
+        />
 
-        <div id="quantity-select-wrapper" className={styles.SettingWrapper}>
-          <span>Quantity of shapes:</span>
-          <select
-            name="quantity"
-            id="quantity"
-            className={styles.Select}
-            value={quantity.toString()}
-            onChange={(e) => handleSetQuantity(Number(e.target.value))}
-          >
-            <option value="4">4</option>
-            <option value="9">9</option>
-          </select>
-        </div>
+        <QuantitySelect
+          quantity={quantity}
+          handleSetQuantity={handleSetQuantity}
+        />
 
-        <div id="difficulty-select-wrapper" className={styles.SettingWrapper}>
-          <span>Difficulty:</span>
-          <select
-            name="quantity"
-            id="quantity"
-            className={styles.Select}
-            value={difficulty}
-            onChange={(e) => handleSetDifficulty(e.target.value)}
-          >
-            <option value="Easy">Easy</option>
-            <option value="Normal">Normal</option>
-            <option value="Hard">Hard</option>
-          </select>
-        </div>
+        <DifficultySelect
+          difficulty={difficulty}
+          handleSetDifficulty={handleSetDifficulty}
+        />
 
-        <button
-          type="button"
-          className={styles.ToggleButton}
-          onClick={handleToggleDropdown}
-          aria-label="toggle settings"
-        >
-          <SettingsIcon className={styles.Icon} /> Hide Settings
-        </button>
+        <HideSettingsButton handleToggleDropdown={handleToggleDropdown} />
       </div>
     </div>
   ) : (
-    <button
-      type="button"
-      className={toggleDropdownClassName}
-      onClick={handleToggleDropdown}
-      aria-label="toggle settings"
+    <ShowSettingsButton
+      handleToggleDropdown={handleToggleDropdown}
       disabled={disabled}
-    >
-      <SettingsIcon className={styles.Icon} /> Show Settings
-    </button>
+    />
   );
 }
 
