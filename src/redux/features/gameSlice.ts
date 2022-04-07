@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+const localStorageBest = localStorage.getItem("best");
+
 export interface IGameState {
   inProgress: boolean;
   clickedIds: string[];
@@ -13,7 +15,7 @@ const initialState: IGameState = {
   clickedIds: [],
   gameResult: "",
   score: 0,
-  best: 0,
+  best: Number(localStorageBest),
 };
 
 export const gameSlice = createSlice({

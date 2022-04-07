@@ -212,7 +212,10 @@ function Game() {
         dispatch(addScore(totalPoints));
         createGameSequence();
       } else {
-        if (score > best) dispatch(setBest(score));
+        if (score > best) {
+          localStorage.setItem("best", score.toString());
+          dispatch(setBest(score));
+        }
         dispatch(clearScore());
         dispatch(toggleInProgress());
       }
