@@ -19,7 +19,12 @@ Here you can find information about the project's development, such as which tec
 
 <div align="center">
 
-![Game Animated GIF][game-animated]
+  <img
+    src="public/app.gif"
+    alt="Animated Game GIF"
+    height="360px"
+    width="360px"
+  />
 
 </div>
 
@@ -150,5 +155,4 @@ List of resources I find helpful and would like to give credit to:
 [issues-url]: https://github.com/pedrotrasfereti/portfolio/issues
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/pedro-trasfereti/
-[game-animated]: public/app.gif
 
