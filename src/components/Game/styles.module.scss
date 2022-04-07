@@ -14,7 +14,6 @@
 
 /* disallow click during animation */
 .Playing {
-  text-shadow: none;
   pointer-events: none;
   user-select: none;
 }
