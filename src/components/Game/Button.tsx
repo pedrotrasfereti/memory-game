@@ -25,14 +25,16 @@ function Button({ id, shape, color, isAnimating }: IGameButtonPropTypes) {
     const node = buttonRef.current;
 
     if (node) {
-      const removeDelay = 1000;
-
       node.classList.toggle(styles.Animate);
       node.classList.toggle(styles.Playing);
+      node.disabled = true;
+
+      const removeDelay = 600;
 
       setTimeout(() => {
         node.classList.toggle(styles.Animate);
         node.classList.toggle(styles.Playing);
+        node.disabled = false;
       }, removeDelay);
     }
   };
@@ -51,7 +53,7 @@ function Button({ id, shape, color, isAnimating }: IGameButtonPropTypes) {
         // annotate button id to "clicked" array
         dispatch(addClicked(buttonRef.current.id));
       }
-    }, 800); // animate before adding to clicked
+    }, 600); // animate before adding to clicked
   };
 
   /* styles - get icon */
