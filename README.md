@@ -18,7 +18,7 @@ Welcome to the _GitHub repository_ of my **Memory Game**!
 Here you can find information about the project's development, such as which technologies were used, how to install and run the project, usage and more.
 
 This game was developed to practice my problem-solving skills and put some of my creativity to use.
-In `Settings`, you can set the **quantity** of buttons, **shapes**, and the **game difficulty** (sequence length).
+In `Settings`, you can set the `quantity` of buttons, button `shapes`, and the game `difficulty` (A.K.A. the sequence length).
 The higher the difficulty, the more points will be added to the **score**.
 If the player fails, the score will be reset and the player's highest score will be saved to the local storage, persisting on page refresh.
 
