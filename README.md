@@ -38,10 +38,9 @@ During the development I was able to:
 
 ### Game Instructions
 
-The objetive of the game is to memorize and repeat as many sequences as possible. After the count of 3 seconds, the player must watch the buttons carefully and then repeat the sequence by clicking the correct buttons. If the player gets it right, new points will be added to the **score** and the counter will restart automatically. If not, the game score will be reset, and a Retry button will appear.
+The objetive of the game is to memorize and repeat as many sequences as possible. After the count of 3 seconds, the player must watch the buttons carefully and then repeat the sequence by clicking on the correct buttons. If the player gets it right, new points will be added to the **score** and the counter will restart automatically. If not, the game score will be reset, and a "retry" button will appear.
 
-Before playing, the player may set the `quantity` of buttons, button `shapes`, and the game `difficulty` (A.K.A. the sequence length) in the `Settings` menu. The higher the difficulty, the more points will be added to the score.
-If the player fails, the score will be reset and the highest score will be saved to the local storage, persisting on page refresh.
+Before playing, the player may set the `quantity` of buttons, button `shapes`, and the game `difficulty` (A.K.A. the sequence length) in the `Settings` menu. The higher the difficulty, the more points will be added to the score. The highest score will be saved to the local storage, persisting on page refresh.
 
 <br />
 
