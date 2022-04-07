@@ -22,8 +22,8 @@ Here you can find information about the project's development, such as which tec
   <img
     src="public/app.gif"
     alt="Animated Game GIF"
-    height="360px"
-    width="360px"
+    height="380px"
+    width="380px"
   />
 
 </div>
