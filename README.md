@@ -17,10 +17,7 @@
 Welcome to the _GitHub repository_ of my **Memory Game**!
 Here you can find information about the project's development, such as which technologies were used, how to install and run the project, usage and more.
 
-This game was developed to practice my problem-solving skills and put some of my creativity to use.
-In `Settings`, you can set the `quantity` of buttons, button `shapes`, and the game `difficulty` (A.K.A. the sequence length).
-The higher the difficulty, the more points will be added to the **score**.
-If the player fails, the score will be reset and the player's highest score will be saved to the local storage, persisting on page refresh.
+This game was developed in the span of 5 days to solidify the lessons and concepts learned on React, Redux and TypeScript. It allowed me to practice my problem-solving skills, and use my creativity to create something fun.
 
 <br />
 
@@ -34,6 +31,17 @@ During the development I was able to:
 * Use the `useDispatch` Hook to mutate data in the **store**;
 * Use the `useSelector` Hook to extract data from the **store**;
 * Use the **localStorage** Web API to persist the high score;
+
+<br />
+
+---
+
+### Game Instructions
+
+The objetive of the game is to memorize and repeat as many sequences as possible. After the count of 3 seconds, the player must watch the buttons carefully and then repeat the sequence by clicking the correct buttons. If the player gets it right, new points will be added to the **score** and the counter will restart automatically.
+
+Before playing, the player can set the `quantity` of buttons, button `shapes`, and the game `difficulty` (A.K.A. the sequence length) in the `Settings` menu. The higher the difficulty, the more points will be added to the score.
+If the player fails, the score will be reset and the highest score will be saved to the local storage, persisting on page refresh.
 
 <br />
 
