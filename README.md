@@ -17,6 +17,12 @@
 Welcome to the _GitHub repository_ of my **Memory Game**!
 Here you can find information about the project's development, such as which technologies were used, how to install and run the project, usage and more.
 
+<div align="center">
+
+![Game Animated GIF][game-animated]
+
+</div>
+
 This game was developed in the span of 5 days to solidify the lessons and concepts learned on React, Redux and TypeScript. It allowed me to practice my problem-solving skills, and use my creativity to create something fun.
 
 <br />
@@ -56,7 +62,7 @@ List of major frameworks/libraries used to bootstrap this project:
 * [Sass](https://sass-lang.com/)
 * [TypeScript](https://www.typescriptlang.org/)
 
-> P.S.: All visual components were developed by me
+
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -144,3 +150,5 @@ List of resources I find helpful and would like to give credit to:
 [issues-url]: https://github.com/pedrotrasfereti/portfolio/issues
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/pedro-trasfereti/
+[game-animated]: public/app.gif
+
