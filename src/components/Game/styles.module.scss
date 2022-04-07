@@ -65,7 +65,8 @@
     }
 
     &:focus {
-      background: none;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
     }
   }
 
