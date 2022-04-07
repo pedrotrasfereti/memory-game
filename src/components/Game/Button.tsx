@@ -1,7 +1,13 @@
 import React, { useEffect, createRef } from "react";
 import { useDispatch } from "react-redux";
 
-import { FaHeart as HeartIcon } from "react-icons/fa";
+/* icons */
+import {
+  BsSquareFill as SquareIcon,
+  BsDiamondFill as DiamondIcon,
+  BsCircleFill as CircleIcon,
+  BsHeartFill as HeartIcon,
+} from "react-icons/bs";
 
 import styles from "./styles.module.scss";
 
@@ -45,40 +51,37 @@ function Button({ id, shape, color, isAnimating }: IGameButtonPropTypes) {
     }
   };
 
-  /* styles - button className */
-  const colorMap = {
-    blue: "#3D8DCF",
-    green: "#36B93C",
-    red: "#CF3D5D",
-    yellow: "#CFAA3D",
+  /* styles - get icon */
+  const getShapeIcon = () => {
+    const colorMap = {
+      blue: "#3D8DCF",
+      green: "#36B93C",
+      red: "#CF3D5D",
+      yellow: "#CFAA3D",
+    };
+
+    const iconStyle = { color: colorMap[color as keyof typeof colorMap] };
+
+    const iconMap = {
+      Square: <SquareIcon style={iconStyle} className={styles.Icon} />,
+      Diamond: <DiamondIcon style={iconStyle} className={styles.Icon} />,
+      Circle: <CircleIcon style={iconStyle} className={styles.Icon} />,
+      Heart: <HeartIcon style={iconStyle} className={styles.Icon} />,
+    };
+
+    return iconMap[shape as keyof typeof iconMap];
   };
-
-  const shapeColor = colorMap[color as keyof typeof colorMap];
-
-  const isHeart = shape === "Heart";
-
-  const btnStyle = isHeart ? {} : { backgroundColor: shapeColor };
-
-  const btnClassName = isHeart
-    ? styles.HeartButton
-    : `${styles.Button} ${styles[shape]}`;
 
   return (
     <button
       id={id}
       ref={buttonRef}
       type="button"
-      className={btnClassName}
-      style={btnStyle}
       onClick={handleClick}
+      className={styles.Button}
       aria-label={id.replaceAll("-", " ")}
     >
-      {isHeart && (
-        <HeartIcon
-          className={`${styles.Button} ${styles.Heart}`}
-          style={{ color: shapeColor }}
-        />
-      )}
+      {getShapeIcon()}
     </button>
   );
 }
