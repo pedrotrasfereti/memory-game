@@ -17,6 +17,8 @@
 Welcome to the _GitHub repository_ of my **Memory Game**!
 Here you can find information about the project's development, such as which technologies were used, how to install and run the project, usage and more.
 
+This game was developed in the span of 5 days to solidify the lessons and concepts learned on React, Redux and TypeScript. It allowed me to practice my problem-solving skills, and use my creativity to create something fun.
+
 <div align="center">
 
   <img
@@ -27,8 +29,6 @@ Here you can find information about the project's development, such as which tec
   />
 
 </div>
-
-This game was developed in the span of 5 days to solidify the lessons and concepts learned on React, Redux and TypeScript. It allowed me to practice my problem-solving skills, and use my creativity to create something fun.
 
 <br />
 
