@@ -1,5 +1,5 @@
 import React, { useEffect, createRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 /* icons */
 import {
@@ -14,9 +14,14 @@ import styles from "./styles.module.scss";
 import { addClicked } from "../../redux/features/gameSlice";
 
 import IGameButtonPropTypes from "../../interfaces/GameButtonPropTypes";
+import { RootState } from "../../redux/store";
 
 function Button({ id, shape, color, isAnimating }: IGameButtonPropTypes) {
   const dispatch = useDispatch();
+
+  const clickAnimation = useSelector(
+    (state: RootState) => state.settings.clickAnimation
+  );
 
   const buttonRef = createRef<HTMLButtonElement>();
 
@@ -46,14 +51,19 @@ function Button({ id, shape, color, isAnimating }: IGameButtonPropTypes) {
 
   /* handle click */
   const handleClick = () => {
-    animate();
+    const node = buttonRef.current as unknown as HTMLButtonElement;
 
-    setTimeout(() => {
-      if (buttonRef.current) {
+    if (clickAnimation) {
+      // animate before adding to clicked
+      animate();
+
+      setTimeout(() => {
         // annotate button id to "clicked" array
-        dispatch(addClicked(buttonRef.current.id));
-      }
-    }, 600); // animate before adding to clicked
+        dispatch(addClicked(node.id));
+      }, 600);
+    } else {
+      dispatch(addClicked(node.id));
+    }
   };
 
   /* styles - get icon */

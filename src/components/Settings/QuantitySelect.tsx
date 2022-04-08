@@ -12,8 +12,8 @@ function QuantitySelect({
     <div id="quantity-select-wrapper" className={styles.SettingWrapper}>
       <span>Quantity of shapes:</span>
       <select
-        name="quantity"
-        id="quantity"
+        name="select-quantity"
+        id="select-quantity"
         className={styles.Select}
         value={quantity.toString()}
         onChange={(e) => handleSetQuantity(Number(e.target.value))}

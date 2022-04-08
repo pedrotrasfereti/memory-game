@@ -17,6 +17,8 @@ function ShowSettingsButton({
   return (
     <button
       type="button"
+      name="show-settings"
+      id="show-settings"
       className={ShowSettingsClassName}
       onClick={handleToggleDropdown}
       aria-label="toggle settings"

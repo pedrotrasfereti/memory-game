@@ -19,6 +19,7 @@ import QuantitySelect from "./QuantitySelect";
 import DifficultySelect from "./DifficultySelect";
 import ShowSettingsButton from "./ShowSettingsButton";
 import HideSettingsButton from "./HideSettingsButton";
+import EnableClickAnimationCheckbox from "./EnableClickAnimationCheckbox";
 
 function Settings({ disabled }: ISettingsPropTypes) {
   const dispatch = useDispatch();
@@ -82,6 +83,8 @@ function Settings({ disabled }: ISettingsPropTypes) {
           difficulty={difficulty}
           handleSetDifficulty={handleSetDifficulty}
         />
+
+        <EnableClickAnimationCheckbox />
 
         <HideSettingsButton handleToggleDropdown={handleToggleDropdown} />
       </div>

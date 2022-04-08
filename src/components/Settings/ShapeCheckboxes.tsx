@@ -28,7 +28,7 @@ function ShapeCheckboxes({
 
       <button
         type="button"
-        name="square shape"
+        name="square-shape"
         id="square-shape"
         onClick={() => handleToggleShape("Square")}
         className={styles.ShapeCheckbox}
@@ -39,7 +39,7 @@ function ShapeCheckboxes({
 
       <button
         type="button"
-        name="diamond shape"
+        name="diamond-shape"
         id="diamond-shape"
         onClick={() => handleToggleShape("Diamond")}
         className={styles.ShapeCheckbox}
@@ -50,7 +50,7 @@ function ShapeCheckboxes({
 
       <button
         type="button"
-        name="circle shape"
+        name="circle-shape"
         id="circle-shape"
         onClick={() => handleToggleShape("Circle")}
         className={styles.ShapeCheckbox}
@@ -61,7 +61,7 @@ function ShapeCheckboxes({
 
       <button
         type="button"
-        name="heart shape"
+        name="heart-shape"
         id="heart-shape"
         onClick={() => handleToggleShape("Heart")}
         className={styles.ShapeCheckbox}

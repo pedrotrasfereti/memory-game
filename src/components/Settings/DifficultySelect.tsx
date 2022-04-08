@@ -12,8 +12,8 @@ function DifficultySelect({
     <div id="difficulty-select-wrapper" className={styles.SettingWrapper}>
       <span>Difficulty:</span>
       <select
-        name="quantity"
-        id="quantity"
+        name="select-difficulty"
+        id="select-difficulty"
         className={styles.Select}
         value={difficulty}
         onChange={(e) => handleSetDifficulty(e.target.value)}

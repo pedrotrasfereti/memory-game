@@ -12,6 +12,8 @@ function HideSettingsButton({
   return (
     <button
       type="button"
+      name="hide-settings"
+      id="hide-settings"
       className={styles.ToggleButton}
       onClick={handleToggleDropdown}
       aria-label="toggle settings"

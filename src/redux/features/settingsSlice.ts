@@ -4,12 +4,14 @@ export interface ISettingsState {
   shapes: string[];
   quantity: number;
   difficulty: string;
+  clickAnimation: boolean;
 }
 
 const initialState: ISettingsState = {
   shapes: ["Square"], // shapes array
   quantity: 4, // button quantity
   difficulty: "Easy", // difficulty
+  clickAnimation: true, // enable click animation
 };
 
 export const settingsSlice = createSlice({
@@ -32,10 +34,18 @@ export const settingsSlice = createSlice({
     setDifficulty: (state, action: PayloadAction<string>) => {
       state.difficulty = action.payload;
     },
+    toggleClickAnimation: (state) => {
+      state.clickAnimation = !state.clickAnimation;
+    },
   },
 });
 
-export const { addShape, removeShape, setQuantity, setDifficulty } =
-  settingsSlice.actions;
+export const {
+  addShape,
+  removeShape,
+  setQuantity,
+  setDifficulty,
+  toggleClickAnimation,
+} = settingsSlice.actions;
 
 export default settingsSlice.reducer;
