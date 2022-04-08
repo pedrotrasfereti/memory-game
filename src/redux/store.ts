@@ -1,15 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import shapesReducer from "./features/shapesSlice";
-import quantityReducer from "./features/quantitySlice";
-import difficultyReducer from "./features/difficultySlice";
+import settingsReducer from "./features/settingsSlice";
 import gameReducer from "./features/gameSlice";
 
 export const store = configureStore({
   reducer: {
-    shapes: shapesReducer,
-    quantity: quantityReducer,
-    difficulty: difficultyReducer,
+    settings: settingsReducer,
     game: gameReducer,
   },
 });

@@ -55,9 +55,11 @@ function Game() {
   );
 
   /* game settings */
-  const shapes = useSelector((state: RootState) => state.shapes.value);
-  const quantity = useSelector((state: RootState) => state.quantity.value);
-  const difficulty = useSelector((state: RootState) => state.difficulty.value);
+  const shapes = useSelector((state: RootState) => state.settings.shapes);
+  const quantity = useSelector((state: RootState) => state.settings.quantity);
+  const difficulty = useSelector(
+    (state: RootState) => state.settings.difficulty
+  );
 
   /* 6. animate buttons in sequence */
   const clearAnimation = (

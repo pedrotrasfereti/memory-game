@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { RootState } from "../../redux/store";
-import { addShape, removeShape } from "../../redux/features/shapesSlice";
-import { setQuantity } from "../../redux/features/quantitySlice";
-import { setDifficulty } from "../../redux/features/difficultySlice";
+
+import {
+  addShape,
+  removeShape,
+  setQuantity,
+  setDifficulty,
+} from "../../redux/features/settingsSlice";
 
 import styles from "./styles.module.scss";
 
@@ -21,9 +25,11 @@ function Settings({ disabled }: ISettingsPropTypes) {
 
   const [dropdown, setDropdown] = useState(false);
 
-  const shapes = useSelector((state: RootState) => state.shapes.value);
-  const quantity = useSelector((state: RootState) => state.quantity.value);
-  const difficulty = useSelector((state: RootState) => state.difficulty.value);
+  const shapes = useSelector((state: RootState) => state.settings.shapes);
+  const quantity = useSelector((state: RootState) => state.settings.quantity);
+  const difficulty = useSelector(
+    (state: RootState) => state.settings.difficulty
+  );
 
   const handleToggleDropdown = () => {
     setDropdown((prevState) => !prevState);
