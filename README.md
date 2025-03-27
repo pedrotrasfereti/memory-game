@@ -83,6 +83,8 @@ To get a local copy up and running follow these simple example steps.
 * npm
   ```sh
   npm install npm@latest -g
+
+  npm install -g yarn
   ```
 
 
@@ -94,7 +96,7 @@ To get a local copy up and running follow these simple example steps.
    ```
 2. Install NPM packages
    ```sh
-   npm install
+   yarn install
    ```
 3. Start the app with Yarn
    ```sh
